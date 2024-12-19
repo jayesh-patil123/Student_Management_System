@@ -1,167 +1,52 @@
-def sign_up():
-    username = input("Enter a Username: ")
-    password = input("Enter a Password: ")
+1] User Authentication:
 
-    with open("users.txt", "a") as user_file:
-        user_file.write(f"{username}:{password}\n")
-    print("Sign Up SuccessfulLy !")
-    user_file.close()
+Implements Sign Up functionality allowing new users to register by providing a username and password, stored in a users.txt file.
+Provides a Sign In feature for registered users to access their accounts by validating credentials against the user database.
+Includes a Forgot Password feature for users to update their password if they forget it, ensuring secure access recovery.
 
-def sign_in():
-    username = input("Enter your Username: ")
-    password = input("Enter your Password: ")
+2] Student Management:
 
-    with open("users.txt", "r") as user_file:
-        users = user_file.readlines()
-        for user in users:
-            u, p = user.strip().split(':')
-            if u == username and p == password:
-                print("Sign In successfully !")
-                return
-    print("Invalid Username or Password. Please Try Again.")
-    user_file.close()
+Allows adding student details, where the student's name and roll number are saved in a student_details.txt file.
+Facilitates the update of student details, enabling modification of a student's name based on their roll number.
+Supports deletion of student details, removing the specific student's record using their roll number.
 
-def forgot_password():
-    username = input("Enter your Username: ")
-    new_password = input("Enter a New password: ")
+3] Search and Display:
 
-    with open("users.txt", "r") as user_file:
-        users = user_file.readlines()
-    
-    updated_users = []
-    found = False
+Provides the ability to search for a student using their roll number, displaying their name and roll number if found.
+Offers a display of all student details, listing every student name and their corresponding roll numbers for easy reference.
 
-    for user in users:
-        u, p = user.strip().split(':')
-        if u == username:
-            updated_users.append(f"{u}:{new_password}\n")
-            found = True
-        else:
-            updated_users.append(user)
+4] File Management:
 
-    if found:
-        with open("users.txt", "w") as user_file:
-            user_file.writelines(updated_users)
-        print("Password Updated Successfully !")
-    else:
-        print("User Not Found. ")
-    user_file.close()
+Handles file operations efficiently:
+Read operations to retrieve stored user and student information.
+Write operations to save or update user and student data.
+Ensures data persistence by storing information in plain text files (users.txt and student_details.txt).
 
-def add_student_details():
-    student_name = input("Enter student Name: ")
-    student_roll = input("Enter student Roll Number: ")
-    
-    with open("student_details.txt", "a") as student_file:
-        student_file.write(f"{student_name},{student_roll}\n")
-    print("Student Details Added Successfully !")
-    student_file.close()
+5] Error Handling and User Feedback:
 
-def update_student_details():
-    student_roll = input("Enter the Roll Number of the student to Update: ")
-    
-    with open("student_details.txt", "r") as student_file:
-        students = student_file.readlines()
-    
-    updated_students = []
-    found = False
-    
-    for student in students:
-        name, roll = student.strip().split(',')
-        if roll == student_roll:
-            new_name = input(f"Enter new name for {name}: ")
-            student = f"{new_name},{roll}\n"
-            found = True
-        updated_students.append(student)
-    
-    with open("student_details.txt", "w") as student_file:
-        student_file.writelines(updated_students)
-    
-    if found:
-        print("Student Details Updated Successfully !")
-    else:
-        print("Student Not Found.")
-    student_file.close()
+Provides appropriate feedback messages for user actions, such as successful sign-ins, password updates, and data operations (e.g., "Student Not Found" or "Invalid Username or Password").
+Handles cases like missing student records or invalid login attempts gracefully.
 
-def delete_student_details():
-    student_roll = input("Enter the roll number of the student to Delete: ")
-    
-    with open("student_details.txt", "r") as student_file:
-        students = student_file.readlines()
-    
-    updated_students = []
-    found = False
-    
-    for student in students:
-        name, roll = student.strip().split(',')
-        if roll == student_roll:
-            found = True
-        else:
-            updated_students.append(student)
-    
-    with open("student_details.txt", "w") as student_file:
-        student_file.writelines(updated_students)
-    
-    if found:
-        print("Student Details Deleted Successfully !")
-    else:
-        print("Student Not Found.")
-    student_file.close()
+6] Menu-Driven Interface:
 
-def show_student_details():
-    with open("student_details.txt", "r") as student_file:
-        students = student_file.readlines()
-    
-    if students:
-        print("Student Details:")
-        for student in students:
-            name, roll = student.strip().split(',')
-            print(f"Name: {name}, Roll Number: {roll}")
-    else:
-        print("No Student Details Available.")
-    student_file.close()
+Presents a user-friendly menu system with options for all functionalities:
+Authentication (Sign Up, Sign In, Forgot Password)
+Student Management (Add, Update, Delete, Show, and Search Student Details)
+Includes an exit option to terminate the program cleanly.
 
-def search_student_details():
-    student_roll = input("Enter the Roll Number to Search For: ")
-    
-    with open("student_details.txt", "r") as student_file:
-        students = student_file.readlines()
-    
-    found = False
-    
-    for student in students:
-        name, roll = student.strip().split(',')
-        if roll == student_roll:
-            print(f"Student Details - Name: {name}, Roll Number: {roll}")
-            found = True
-    
-    if not found:
-        print("Student Not Found.")
-    student_file.close()
+7] Modular Design:
 
-while True:
-    print("\nWelcome to the Student Management System")
-    print("1. Sign Up")
-    print("2. Sign In")
-    print("3. Forgot Password")
-    print("4. Add Student Details")
-    print("5. Update Student Details")
-    print("6. Delete Student Details")
-    print("7. Show Student Details")
-    print("8. Search Student Details")
-    print("9. Exit")
-    
-    choice = input("Enter your choice: ")
-  
-    if choice == "1": sign_up() # For Sign Up
-    elif choice == "2": sign_in() # For Sign In
-    elif choice == "3": forgot_password() # When Forgot Password
-    elif choice == "4": add_student_details() # Add Student Details
-    elif choice == "5": update_student_details() # Update Student Details
-    elif choice == "6": delete_student_details() # Delete Student Details
-    elif choice == "7": show_student_details() # Show Student Details
-    elif choice == "8": search_student_details() # Search Student Details through there Roll No
-    elif choice == "9": # Exit
-        print("Goodbye!")
-        break
-    else:
-        print("Invalid choice. Please try again.")
+Each function is self-contained, focusing on a single responsibility, ensuring code modularity and maintainability.
+
+Keywords:
+Sign Up
+Sign In
+Forgot Password
+Add Student Details
+Update Student Details
+Delete Student Details
+Search Student Details
+Show Student Details
+File Management
+user-friendly menu system
+

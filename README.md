@@ -39,14 +39,24 @@ Includes an exit option to terminate the program cleanly.
 Each function is self-contained, focusing on a single responsibility, ensuring code modularity and maintainability.
 
 Keywords:
+
 Sign Up
+
 Sign In
+
 Forgot Password
+
 Add Student Details
+
 Update Student Details
+
 Delete Student Details
+
 Search Student Details
+
 Show Student Details
+
 File Management
+
 user-friendly menu system
 
